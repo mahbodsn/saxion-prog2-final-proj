@@ -32,4 +32,6 @@ void big_game_destroy(big_game_t *game);
 /// @return State of the big game
 big_game_state_t big_game_get_state(const big_game_t *game);
 
+void big_game_update_state(big_game_t *game);
+
 #endif

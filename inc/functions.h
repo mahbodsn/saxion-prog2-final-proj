@@ -1,130 +1,64 @@
-#include <stdbool.h>  // for bool
-#include <stdio.h>    // for printf()
-#include <stdlib.h>   // for rand()
-#include <string.h>
-#include <time.h>  // for time(), localtime()
-#include <ctype.h>
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
 
-#include "functions.h"
+#include <stdbool.h>
 
-static void seed_prng(void) {
-  static bool seeded = false;
-  if (!seeded) {
-    srand(time(NULL));
-    for (int i = 0; i < 50; i++)
-      rand();
-    seeded = true;
-  }
-}
+/// Reads an integer from the user.
+/// @return The integer entered by the user.
+int read_int(void);
 
-int read_int(void) {
-  int input;
-  while (scanf("%d", &input) != 1) {
-    printf("Invalid input. Try again: ");
-    while (getchar() != '\n')
-      ;  // clear input buffer
-  }
-  while (getchar() != '\n')
-    ;  // clear input buffer
-  return input;
-}
+/// Reads a float from the user.
+/// @return The float entered by the user.
+float read_float(void);
 
-float read_float(void) {
-  float input;
-  while (scanf("%f", &input) != 1) {
-    printf("Invalid input. Try again: ");
-    while (getchar() != '\n')
-      ;  // clear input buffer
-  }
-  while (getchar() != '\n')
-    ;  // clear input buffer
-  return input;
-}
+/// Reads a double from the user.
+/// @return The double entered by the user.
+double read_double(void);
 
-double read_double(void) {
-  double input;
-  while (scanf("%lf", &input) != 1) {
-    printf("Invalid input. Try again: ");
-    while (getchar() != '\n')
-      ;  // clear input buffer
-  }
-  while (getchar() != '\n')
-    ;  // clear input buffer
-  return input;
-}
+/// Reads a character from the user.
+/// @return The character entered by the user.
+char read_char(void);
 
-char read_char(void) {
-  int extra;
-  char input, trailing;
-  do {
-    while (scanf(" %c", &input) != 1) {
-      printf("Invalid input. Try again: ");
-      while (getchar() != '\n')
-        ;  // clear input buffer
-    }
-    extra = 0;
-    while ((trailing = getchar()) != '\n')  // clear input buffer
-      if (!isspace(trailing))
-        extra++;
-    if (extra > 0)
-      printf("Enter a single character! ");
-  } while (extra > 0);
-  return input;
-}
+/// Generates a random integer between min and max (inclusive).
+/// @param min The minimum value of the random number.
+/// @param max The maximum value of the random number.
+int random_int(int min, int max);
 
-int random_int(int min, int max) {
-  seed_prng();
-  return rand() / (RAND_MAX / (max - min + 1) + 1) + min;
-}
+/// Generates a random float between min and max (inclusive).
+/// @param min The minimum value of the random number.
+/// @param max The maximum value of the random number.
+float random_float(float min, float max);
 
-float random_float(float min, float max) {
-  seed_prng();
-  return rand() * (max - min) / RAND_MAX + min;
-}
+/// Returns the maximum of two integers.
+/// @param a The first integer.
+/// @param b The second integer.
+/// @return The maximum of a and b.
+int max_int(int a, int b);
 
-int max_int(int a, int b) {
-  if (a > b)
-    return a;
-  else
-    return b;
-}
+/// Returns the minimum of two integers.
+/// @param a The first integer.
+/// @param b The second integer.
+/// @return The minimum of a and b.
+int min_int(int a, int b);
 
-int min_int(int a, int b) {
-  if (a < b)
-    return a;
-  else
-    return b;
-}
+/// Returns the current date by filling an array
+/// with the current year, month, and day.
+/// @param date_parts An array of at least 3 integers.
+/// @return True if the date was successfully retrieved,
+///         false otherwise.
+bool get_current_date(int date_parts[static 3]);
 
-bool get_current_date(int date_parts[static 3]) {
-  time_t t = time(NULL);
-  if (t == -1)
-    return false;
-  struct tm* tm = localtime(&t);
-  if (tm == NULL)
-    return false;
-  date_parts[0] = tm->tm_year + 1900;
-  date_parts[1] = tm->tm_mon + 1;
-  date_parts[2] = tm->tm_mday;
-  return true;
-}
+/// Returns the current time by filling an array
+/// with the current hour, minute, and second.
+/// @param time_parts An array of at least 3 integers.
+/// @return True if the time was successfully retrieved,
+///         false otherwise.
+bool get_current_time(int time_parts[static 3]);
 
-bool get_current_time(int time_parts[static 3]) {
-  time_t t = time(NULL);
-  if (t == -1)
-    return false;
-  struct tm* tm = localtime(&t);
-  if (tm == NULL)
-    return false;
-  time_parts[0] = tm->tm_hour;
-  time_parts[1] = tm->tm_min;
-  time_parts[2] = tm->tm_sec;
-  return true;
-}
+/// Reads a string from the user.
+/// @param storage The array to store the string.
+/// @param size The size of the storage array.
+/// @return The string entered by the user. At most size - 1 characters are read, and the string is null-terminated.
+void read_string(char storage[], int size);
 
-void read_string(char storage[], int size) {
-  fgets(storage, size, stdin);
-  char* ptr = strrchr(storage, '\n');  // find last newline
-  if (ptr != NULL)
-    *ptr = '\0';  // remove trailing newline
-}
+#endif //FUNCTIONS_H

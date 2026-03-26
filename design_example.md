@@ -2,11 +2,11 @@
 
 **Group members**: Mahbod Seihoon (581442), Sergej Savić (593728)
 
-This document gives the high-level design of a tic tac toe game implementation. It specifies the data structures that are used, the functions that operate on those data structures, and describes how the different player interact with components to implement the game of tic-tac-toe.
+This document gives the high-level design of a tic-tac-toe game implementation. It specifies the data structures that are used, the functions that operate on those data structures, and describes how the different player interact with components to implement the game of tic-tac-toe.
 
 ## Game overview
 
-Ultimate Tic Tac Toe is played on a 3x3 grid of smaller Tic Tac Toe boards (making a 9-board system). Players take turns placing X or O in a cell of the current board; the position of that move determines which small board the opponent must play in next. A player wins a small board by making three in a row; the overall game is won by winning three small boards in a row.
+Ultimate Tic Tac Toe is played on a 3x3 grid of smaller Tic-tac-toe boards (making a 9-board system). Players take turns placing X or O in a cell of the current board; the position of that move determines which small board the opponent must play in next. A player wins a small board by making three in a row; the overall game is won by winning three small boards in a row.
 
 ## Design components
 
